@@ -1,6 +1,10 @@
 import express from 'express';
 import cors from 'cors';
 
+
+import cononize from './canonize.js';
+
+
 const app = express();
 app.use(cors());
 app.get('/', (req, res) => {
@@ -78,7 +82,14 @@ app.get('/2b', (req, res) => {
 }
 });
 
-
+app.get('/2c', (req, res) => {
+  if(!req.query.username){
+    return res.send('No username');
+  }
+  console.log(req.query.username);
+  const usernameOnl = '@' + cononize(req.query.username);
+  return res.send(usernameOnl);
+})
 
 app.listen(3000, () => {
   console.log('Your app listening on port 3000!');
